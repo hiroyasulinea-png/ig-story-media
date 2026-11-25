@@ -11,13 +11,18 @@ on:
     paths: ['queue/**']    # runs only when commit message contains "#now"
 permissions:
   contents: write
-concurrency: post-story
+concurrency:
+  group: post-story
+  cancel-in-progress: false
 jobs:
   post:
     if: github.event_name != 'push' || contains(github.event.head_commit.message, '#now')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
       - run: bash scripts/post.sh
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
