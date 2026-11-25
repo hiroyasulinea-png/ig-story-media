@@ -1,7 +1,10 @@
 name: post-story
 on:
   schedule:
-    - cron: '0 12 * * *'   # 21:00 JST (UTC+9). GitHub may start it a few minutes late.
+    # JST = UTC+9. GitHub may start a few minutes late.
+    - cron: '0 10 * * *'   # 19:00 JST
+    - cron: '0 11 * * *'   # 20:00 JST
+    - cron: '0 12 * * *'   # 21:00 JST
   workflow_dispatch:       # manual run (GitHub app / web: Actions > post-story > Run workflow)
   push:
     branches: [main]
