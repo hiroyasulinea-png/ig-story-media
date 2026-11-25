@@ -12,6 +12,11 @@ This repo is the posting queue. GitHub Actions posts items from `queue/`; you on
 - No instruction words → ask one line: 今すぐ or 予約.
 - Commit to `main` and push. Commit message must contain `#now` for 今すぐ (this triggers the post), otherwise `queue: add <name>`.
 
+## Daily rotation (posted every day)
+- Files in `rotation/` are posted every day at 19:00 / 20:00 / 21:00 JST, one per slot, order reshuffled daily, 0-7 min random delay.
+- 毎日/繰り返し → save the file into `rotation/` (any name, JPEG or mp4/mov). Remove a file to stop it.
+- One-off 予約 items in `queue/` take the slot first; the rotation item for that slot is skipped that day.
+
 ## Status
 - Waiting: files in `queue/`. Posted: `posted/`. Failed: `failed/` (commit message has the reason).
 - Schedule: `.github/workflows/post-story.yml` (cron is UTC; JST = UTC+9). Change only when asked.
