@@ -1,0 +1,21 @@
+name: post-story
+on:
+  schedule:
+    - cron: '0 12 * * *'   # 21:00 JST (UTC+9). GitHub may start it a few minutes late.
+  workflow_dispatch:       # manual run (GitHub app / web: Actions > post-story > Run workflow)
+  push:
+    branches: [main]
+    paths: ['queue/**']    # runs only when commit message contains "#now"
+permissions:
+  contents: write
+concurrency: post-story
+jobs:
+  post:
+    if: github.event_name != 'push' || contains(github.event.head_commit.message, '#now')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/post.sh
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
