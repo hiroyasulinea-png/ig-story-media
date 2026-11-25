@@ -53,7 +53,7 @@ post_rotation() {
   local day slot n f url field resp cid st mid
   day=$(TZ=Asia/Tokyo date +%Y%m%d)
   case "${SCHEDULE:-}" in "0 10 * * *") slot=0 ;; "0 11 * * *") slot=1 ;; "0 12 * * *") slot=2 ;; *) slot=$(( $(TZ=Asia/Tokyo date +%-H) - 19 )) ;; esac
-  mapfile -t items < <(ls -1 rotation 2>/dev/null | grep -v '^\.gitkeep$' | sort | shuf --random-source=<(yes "$day"))
+  mapfile -t items < <(ls -1 rotation 2>/dev/null | grep -v '^\.gitkeep$' | sort | shuf --random-source=<(yes "$day" 2>/dev/null))
   n=${#items[@]}
   [ "$n" -eq 0 ] && { echo "rotation empty"; return 0; }
   [ "$slot" -lt 0 ] || [ "$slot" -ge "$n" ] && { echo "no rotation item for slot $slot"; return 0; }
