@@ -27,3 +27,4 @@ jobs:
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          SCHEDULE: ${{ github.event.schedule }}
